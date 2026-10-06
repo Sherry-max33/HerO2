@@ -1,7 +1,7 @@
 import copy
 import json
 import tqdm
-from vllm import LLM, SamplingParams
+from ollama_backend import LLM, SamplingParams
 import argparse
 import torch
 from datetime import datetime, timedelta

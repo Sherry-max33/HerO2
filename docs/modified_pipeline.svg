@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1720" height="760" viewBox="0 0 1720 760" role="img" aria-labelledby="title desc">
+  <title id="title">Modified HerO2 pipeline</title>
+  <desc id="desc">Four-step HerO2 figure with the models and thinking switches used in this checkout.</desc>
+  <style>
+    text { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .panel { fill: #ffffff; stroke: #1c1917; stroke-width: 1.5; }
+    .h { font-size: 22px; font-weight: 700; fill: #1c1917; }
+    .label { font-size: 16px; fill: #1c1917; }
+    .model { font-size: 16px; font-weight: 700; fill: #1c1917; }
+    .sw { font-size: 12px; fill: #3f3a36; }
+    .gen { fill: #d7ebff; stroke: #7eadd4; stroke-width: 1.5; }
+    .embed { fill: #d3f0c8; stroke: #6aaf62; stroke-width: 1.5; }
+    .judge { fill: #ffd2ad; stroke: #e08a45; stroke-width: 1.5; }
+  </style>
+  <rect width="1720" height="760" fill="#ffffff"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1.2 L 8.2 5 L 0 8.8 Z" fill="#1c1917"/>
+    </marker>
+  </defs>
+
+  <rect class="panel" x="8" y="8" width="1704" height="744"/>
+  <line x1="8" y1="318" x2="1712" y2="318" stroke="#1c1917" stroke-width="1.5"/>
+  <line x1="560" y1="318" x2="560" y2="752" stroke="#1c1917" stroke-width="1.5"/>
+  <line x1="1120" y1="318" x2="1120" y2="752" stroke="#1c1917" stroke-width="1.5"/>
+
+  <text class="h" x="28" y="48">(1) Evidence retrieval</text>
+
+  <text class="label" x="40" y="178">Claim</text>
+  <line x1="100" y1="172" x2="148" y2="172" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <rect class="gen" x="156" y="128" width="190" height="88" rx="8"/>
+  <text class="model" x="251" y="162" text-anchor="middle">Llama 3.1 8B</text>
+  <text class="sw" x="251" y="184" text-anchor="middle">enable_thinking=False</text>
+
+  <line x1="354" y1="172" x2="408" y2="172" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="label" x="490" y="166" text-anchor="middle">Hypothetical</text>
+  <text class="label" x="490" y="188" text-anchor="middle">documents</text>
+  <line x1="560" y1="172" x2="614" y2="172" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect class="embed" x="622" y="128" width="250" height="88" rx="8"/>
+  <text class="model" x="747" y="166" text-anchor="middle">thenlper/gte-base</text>
+  <text class="sw" x="747" y="190" text-anchor="middle">not gte-base-en-v1.5</text>
+
+  <line x1="880" y1="172" x2="934" y2="172" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="label" x="1010" y="166" text-anchor="middle">Relevant</text>
+  <text class="label" x="1010" y="188" text-anchor="middle">documents</text>
+  <line x1="1076" y1="172" x2="1130" y2="172" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect class="gen" x="1138" y="118" width="200" height="108" rx="8"/>
+  <text class="model" x="1238" y="146" text-anchor="middle">Qwen3 8B</text>
+  <text class="sw" x="1238" y="166" text-anchor="middle">enable_thinking=False</text>
+  <text class="sw" x="1238" y="182" text-anchor="middle">reasoning.enabled=false</text>
+  <text class="sw" x="1238" y="198" text-anchor="middle">/no_think</text>
+
+  <line x1="1346" y1="172" x2="1380" y2="172" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="label" x="1396" y="166">Summary</text>
+  <text class="label" x="1396" y="188">documents</text>
+
+  <path d="M 62 196 L 62 276 L 747 276 L 747 216" fill="none" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <text class="h" x="28" y="368">(2) Question generation</text>
+  <text class="label" x="40" y="468">Claim</text>
+  <text class="label" x="40" y="506">10-shot Q&amp;A</text>
+  <text class="label" x="40" y="544">Summary document</text>
+  <line x1="200" y1="506" x2="242" y2="506" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <rect class="gen" x="250" y="448" width="200" height="112" rx="8"/>
+  <text class="model" x="350" y="478" text-anchor="middle">Qwen3 8B</text>
+  <text class="sw" x="350" y="498" text-anchor="middle">enable_thinking=False</text>
+  <text class="sw" x="350" y="514" text-anchor="middle">reasoning.enabled=false</text>
+  <text class="sw" x="350" y="530" text-anchor="middle">/no_think</text>
+  <line x1="450" y1="506" x2="470" y2="506" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="label" x="478" y="512">Question</text>
+
+  <text class="h" x="580" y="368">(3) Answer reformulation</text>
+  <text class="label" x="592" y="468">Claim</text>
+  <text class="label" x="592" y="506">Question</text>
+  <text class="label" x="592" y="544">Summary document</text>
+  <line x1="752" y1="506" x2="794" y2="506" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <rect class="gen" x="802" y="448" width="200" height="112" rx="8"/>
+  <text class="model" x="902" y="478" text-anchor="middle">Qwen3 8B</text>
+  <text class="sw" x="902" y="498" text-anchor="middle">enable_thinking=False</text>
+  <text class="sw" x="902" y="514" text-anchor="middle">reasoning.enabled=false</text>
+  <text class="sw" x="902" y="530" text-anchor="middle">/no_think</text>
+  <line x1="1002" y1="506" x2="1024" y2="506" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="label" x="1028" y="500">Rewritten</text>
+  <text class="label" x="1028" y="522">answer</text>
+
+  <text class="h" x="1140" y="368">(4) Veracity prediction</text>
+  <text class="label" x="1152" y="468">Claim</text>
+  <text class="label" x="1152" y="506">Questions</text>
+  <text class="label" x="1152" y="544">Rewritten answers</text>
+  <line x1="1310" y1="506" x2="1344" y2="506" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <rect class="judge" x="1352" y="446" width="176" height="120" rx="8"/>
+  <text class="model" x="1440" y="478" text-anchor="middle">Qwen3 32B</text>
+  <text class="sw" x="1440" y="498" text-anchor="middle">base, not AWQ</text>
+  <text class="sw" x="1440" y="516" text-anchor="middle">reasoning.enabled=false</text>
+  <text class="sw" x="1440" y="534" text-anchor="middle">/no_think</text>
+  <line x1="1536" y1="506" x2="1572" y2="506" stroke="#1c1917" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="label" x="1580" y="496">Justification</text>
+  <text class="label" x="1580" y="522">Verdict</text>
+</svg>

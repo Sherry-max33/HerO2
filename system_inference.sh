@@ -44,4 +44,4 @@ python hero2/answer_rewriting.py \
 python hero2/veracity_prediction.py \
     --target_data "${DATA_STORE}/${SYSTEM_NAME}/${SPLIT}_top_k_qa_rewrite.json" \
     --output_file "${DATA_STORE}/${SYSTEM_NAME}/${SPLIT}_veracity_prediction.json" \
-    --model "humane-lab/Qwen3-32B-AWQ-HerO" || exit 1
+    --model "qwen3:32b" || exit 1

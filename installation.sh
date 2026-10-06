@@ -15,6 +15,6 @@ conda info --envs
 sleep 2
 
 # Install packages
-python3 -m pip install vllm==0.8.5
+python3 -m pip install torch
 python3 -m pip install nltk
 python3 -m pip install -r requirements.txt

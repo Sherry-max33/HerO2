@@ -3,7 +3,7 @@ import argparse
 import torch
 import transformers
 import json
-from vllm import LLM, SamplingParams
+from ollama_backend import LLM, SamplingParams, tokenizer_source
 from datetime import datetime, timedelta
 import time
 from typing import List, Dict, Optional
@@ -68,17 +68,20 @@ def main(args):
     try:
         with open(args.target_data) as f:
             examples = json.load(f)
-    except:
+    except Exception:
         examples = []
         with open(args.target_data) as f:
             for line in f:
-                examples.append(json.loads(line))
+                if line.strip():
+                    examples.append(json.loads(line))
+    if isinstance(examples, dict):
+        examples = [examples]
     print(f"Data loading took: {format_time(time.time() - data_load_start)}")
     print(f"Total examples to process: {len(examples)}")
 
     # Initialize model and tokenizer
     model_start = time.time()
-    tokenizer = transformers.AutoTokenizer.from_pretrained(args.model)
+    tokenizer = transformers.AutoTokenizer.from_pretrained(tokenizer_source(args.model), trust_remote_code=True)
     
     gpu_counts = torch.cuda.device_count()
     print(f"Using {gpu_counts} GPU{'s' if gpu_counts > 1 else ''}")
@@ -178,7 +181,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', default="humane-lab/Meta-Llama-3.1-8B-HerO")
+    parser.add_argument('--model', default="qwen3:32b")
     parser.add_argument("-i", "--target_data", default="data_store/averitec/dev.json")
     parser.add_argument("-o", "--output_file", default="data_store/dev_veracity_prediction.json")
     parser.add_argument("--batch_size", type=int, default=8, help="Batch size for processing")

@@ -40,7 +40,17 @@ def process_file(args):
     if not docs:
         return i, 0
 
-    embeddings = model.encode(docs, batch_size=batch_size, show_progress_bar=True)
+    max_len = getattr(model, "max_seq_length", None) or 8192
+    limit = max(8, max_len - 2)
+    tokenizer = model.tokenizer
+    fitted = []
+    for doc in docs:
+        ids = tokenizer.encode(doc, add_special_tokens=False)
+        if len(ids) > limit:
+            doc = tokenizer.decode(ids[:limit])
+        fitted.append(doc)
+
+    embeddings = model.encode(fitted, batch_size=batch_size, show_progress_bar=True)
 
     os.makedirs(output_dir, exist_ok=True)
     out_path = os.path.join(output_dir, f"{i}.pkl")
@@ -49,8 +59,38 @@ def process_file(args):
 
     return i, len(docs)
 
+def embed_file_api(i, knowledge_dir, output_dir):
+    from ollama_backend import embed_texts
+
+    input_path = os.path.join(knowledge_dir, f"{i}.json")
+    docs = []
+    with open(input_path, "r", encoding="utf-8") as handle:
+        for line in handle:
+            data = json.loads(line)
+            if len(data["url2text"]) > 0:
+                docs.append("\n".join(data["url2text"]))
+    if not docs:
+        return i, 0
+    embeddings = embed_texts(docs)
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, f"{i}.pkl"), "wb") as out_f:
+        pickle.dump(embeddings, out_f)
+    return i, len(docs)
+
+
 if __name__ == "__main__":
     args = parse_args()
+
+    from ollama_backend import uses_embedding_api
+
+    if uses_embedding_api(args.model_name):
+        for i in tqdm.tqdm(range(args.num_files), desc="Embedding files"):
+            idx, doc_count = embed_file_api(i, args.knowledge_dir, args.output_dir)
+            if doc_count == 0:
+                tqdm.tqdm.write(f"[{idx}] skipped, no docs")
+            else:
+                tqdm.tqdm.write(f"[{idx}] embedded {doc_count} docs")
+        raise SystemExit(0)
 
     multiprocessing.set_start_method("spawn", force=True)
 

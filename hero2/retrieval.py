@@ -32,13 +32,20 @@ def main(args):
     with open(args.target_data, "r", encoding='utf-8') as f:
         target_data = json.load(f)
   
-    model = SentenceTransformer(args.model, trust_remote_code=True)
+    from ollama_backend import embed_texts, uses_embedding_api
+
+    model = None
+    if not uses_embedding_api(args.model):
+        model = SentenceTransformer(args.model, trust_remote_code=True)
   
     with open(args.json_output, "w", encoding="utf-8") as json_output:
         for idx, example in tqdm.tqdm(enumerate(target_data)):
             claim = example['claim']
             query = [claim] + [le for le in example['hypo_fc_docs']  if len(le.strip()) > 0 ]
-            query_embeddings = model.encode(query)
+            if model is None:
+                query_embeddings = embed_texts(query)
+            else:
+                query_embeddings = model.encode(query)
             avg_emb_q = np.mean(query_embeddings, axis=0)
             hyde_vector = avg_emb_q.reshape((1, -1))
       

@@ -1,4 +1,4 @@
-from vllm import LLM, SamplingParams
+from ollama_backend import LLM, SamplingParams
 import json
 import torch
 import time

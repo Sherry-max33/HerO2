@@ -6,7 +6,7 @@ import nltk
 from rank_bm25 import BM25Okapi
 import numpy as np
 import torch
-from vllm import LLM, SamplingParams
+from ollama_backend import LLM, SamplingParams
 from datetime import datetime, timedelta
 from itertools import islice
 
