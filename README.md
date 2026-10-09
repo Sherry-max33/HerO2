@@ -8,7 +8,7 @@ Hardware was a MacBook Pro (M4 Pro, 24 GB, no NVIDIA GPU). vLLM and the local Qw
 
 ## Pipeline we ran
 
-![Modified HerO2 pipeline](docs/modified_pipeline.jpg)
+![Modified HerO2 pipeline](docs/modified_pipeline.png)
 
 Same four blocks as the HerO 2 method figure. The lines under each model name are the parameters actually set in code.
 
