@@ -1,12 +1,14 @@
 # HerO2 on a Mac, via OpenRouter
 
-This note describes the pipeline actually run in this checkout. It is a connectivity reproduction of [HerO 2](README.md) for one AVeriTeC dev claim. It is not a faithful rerun of the paper.
+This repository is an adapted checkout of [HerO 2](https://github.com/ssu-humane/HerO2) by Team HUMANE (Yoon, Jung, Yoon, and Park). The original project README is preserved at [docs/README.original.md](docs/README.original.md). The code remains under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0).
+
+This checkout completed a one-claim end-to-end smoke test on a single AVeriTeC development claim. It is not a full reproduction of the paper and not a benchmark evaluation.
 
 Hardware was a MacBook Pro (M4 Pro, 24 GB, no NVIDIA GPU). vLLM and the local Qwen3-32B weights do not run here, so every generation call goes through OpenRouter. The API key lives in `.env` as `OPENROUTER_API_KEY` and is not committed.
 
 ## Pipeline we ran
 
-![Modified HerO2 pipeline](docs/modified_pipeline.svg)
+![Modified HerO2 pipeline](docs/modified_pipeline.jpg)
 
 Same four blocks as the HerO 2 method figure. The lines under each model name are the parameters actually set in code.
 
